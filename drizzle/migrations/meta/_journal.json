@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791652218515,
+      "tag": "0000_ortakyuva_families",
+      "breakpoints": true
+    }
+  ]
 }

@@ -14,13 +14,139 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      families: {
+        Row: {
+          child_name: string
+          created_at: string
+          created_by: string
+          id: string
+          invite_code: string
+        }
+        Insert: {
+          child_name: string
+          created_at?: string
+          created_by: string
+          id?: string
+          invite_code?: string
+        }
+        Update: {
+          child_name?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          invite_code?: string
+        }
+        Relationships: []
+      }
+      family_records: {
+        Row: {
+          author_id: string
+          created_at: string
+          family_id: string
+          id: string
+          kind: string
+          payload: Json
+        }
+        Insert: {
+          author_id?: string
+          created_at?: string
+          family_id: string
+          id?: string
+          kind: string
+          payload?: Json
+        }
+        Update: {
+          author_id?: string
+          created_at?: string
+          family_id?: string
+          id?: string
+          kind?: string
+          payload?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "family_records_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          display_name: string
+          id: string
+          preferences: Json
+        }
+        Insert: {
+          avatar_url?: string | null
+          display_name?: string
+          id: string
+          preferences?: Json
+        }
+        Update: {
+          avatar_url?: string | null
+          display_name?: string
+          id?: string
+          preferences?: Json
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          access: string
+          display_name: string
+          family_id: string
+          id: string
+          parent_role: string
+          user_id: string
+        }
+        Insert: {
+          access?: string
+          display_name?: string
+          family_id: string
+          id?: string
+          parent_role: string
+          user_id: string
+        }
+        Update: {
+          access?: string
+          display_name?: string
+          family_id?: string
+          id?: string
+          parent_role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_family: {
+        Args: { child: string; parent: string }
+        Returns: string
+      }
+      family_access: {
+        Args: { edit_required?: boolean; fid: string }
+        Returns: boolean
+      }
+      join_family: { Args: { code: string; parent: string }; Returns: string }
+      set_family_access: {
+        Args: { fid: string; member: string; permission: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
