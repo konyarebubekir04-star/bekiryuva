@@ -10,33 +10,102 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AyarlarRouteImport } from './routes/ayarlar'
+import { Route as MesajlarRouteImport } from './routes/mesajlar'
+import { Route as OzetRouteImport } from './routes/ozet'
+import { Route as SaglikRouteImport } from './routes/saglik'
+import { Route as TakvimRouteImport } from './routes/takvim'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AyarlarRoute = AyarlarRouteImport.update({
+  id: '/ayarlar',
+  path: '/ayarlar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MesajlarRoute = MesajlarRouteImport.update({
+  id: '/mesajlar',
+  path: '/mesajlar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OzetRoute = OzetRouteImport.update({
+  id: '/ozet',
+  path: '/ozet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SaglikRoute = SaglikRouteImport.update({
+  id: '/saglik',
+  path: '/saglik',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TakvimRoute = TakvimRouteImport.update({
+  id: '/takvim',
+  path: '/takvim',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ayarlar': typeof AyarlarRoute
+  '/mesajlar': typeof MesajlarRoute
+  '/ozet': typeof OzetRoute
+  '/saglik': typeof SaglikRoute
+  '/takvim': typeof TakvimRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ayarlar': typeof AyarlarRoute
+  '/mesajlar': typeof MesajlarRoute
+  '/ozet': typeof OzetRoute
+  '/saglik': typeof SaglikRoute
+  '/takvim': typeof TakvimRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/ayarlar': typeof AyarlarRoute
+  '/mesajlar': typeof MesajlarRoute
+  '/ozet': typeof OzetRoute
+  '/saglik': typeof SaglikRoute
+  '/takvim': typeof TakvimRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/auth' | '/ayarlar' | '/mesajlar' | '/ozet' | '/saglik' | '/takvim'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/auth' | '/ayarlar' | '/mesajlar' | '/ozet' | '/saglik' | '/takvim'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/ayarlar'
+    | '/mesajlar'
+    | '/ozet'
+    | '/saglik'
+    | '/takvim'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  AyarlarRoute: typeof AyarlarRoute
+  MesajlarRoute: typeof MesajlarRoute
+  OzetRoute: typeof OzetRoute
+  SaglikRoute: typeof SaglikRoute
+  TakvimRoute: typeof TakvimRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +117,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ayarlar': {
+      id: '/ayarlar'
+      path: '/ayarlar'
+      fullPath: '/ayarlar'
+      preLoaderRoute: typeof AyarlarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mesajlar': {
+      id: '/mesajlar'
+      path: '/mesajlar'
+      fullPath: '/mesajlar'
+      preLoaderRoute: typeof MesajlarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ozet': {
+      id: '/ozet'
+      path: '/ozet'
+      fullPath: '/ozet'
+      preLoaderRoute: typeof OzetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saglik': {
+      id: '/saglik'
+      path: '/saglik'
+      fullPath: '/saglik'
+      preLoaderRoute: typeof SaglikRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/takvim': {
+      id: '/takvim'
+      path: '/takvim'
+      fullPath: '/takvim'
+      preLoaderRoute: typeof TakvimRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  AyarlarRoute: AyarlarRoute,
+  MesajlarRoute: MesajlarRoute,
+  OzetRoute: OzetRoute,
+  SaglikRoute: SaglikRoute,
+  TakvimRoute: TakvimRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
