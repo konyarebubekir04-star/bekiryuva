@@ -8,6 +8,13 @@
       "when": 1791652218515,
       "tag": "0000_ortakyuva_families",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791652258747,
+      "tag": "0001_event_audit_and_parent_editing",
+      "breakpoints": true
     }
   ]
 }

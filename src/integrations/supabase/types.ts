@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      event_history: {
+        Row: {
+          action: string
+          actor_id: string
+          actor_name: string
+          created_at: string
+          family_id: string
+          id: string
+          record_id: string
+          snapshot: Json
+        }
+        Insert: {
+          action: string
+          actor_id: string
+          actor_name?: string
+          created_at?: string
+          family_id: string
+          id?: string
+          record_id: string
+          snapshot: Json
+        }
+        Update: {
+          action?: string
+          actor_id?: string
+          actor_name?: string
+          created_at?: string
+          family_id?: string
+          id?: string
+          record_id?: string
+          snapshot?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_history_family_id_fkey"
+            columns: ["family_id"]
+            isOneToOne: false
+            referencedRelation: "families"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       families: {
         Row: {
           child_name: string
