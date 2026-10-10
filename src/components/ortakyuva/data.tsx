@@ -4,7 +4,8 @@ import { supabase } from '@/integrations/supabase/client';
 import type { User } from '@supabase/supabase-js';
 import type { Json } from '@/integrations/supabase/types';
 import { toast } from 'sonner';
-export type RecordItem={id:string;kind:string;payload:Record<string,any>;author_id:string;created_at:string};
+export type Payload=Partial<Record<'title'|'date'|'time'|'end'|'location'|'parent'|'repeat'|'status'|'reminder'|'note'|'done'|'text'|'minutes',any>>;
+export type RecordItem={id:string;kind:string;payload:Payload;author_id:string;created_at:string};
 const today=new Date(); const date=(offset:number)=>{const d=new Date(today);d.setDate(d.getDate()+offset);return d.toLocaleDateString('sv-SE');};
 export const demoRecords:RecordItem[]=[
 {id:'e1',kind:'event',author_id:'baba',created_at:today.toISOString(),payload:{title:'Babayla hafta sonu',date:date(0),time:'17:00',end:'19:00',location:'Maçka Parkı, ana giriş',parent:'baba',repeat:'weekly',status:'confirmed',reminder:'30'}},
@@ -33,7 +34,7 @@ export function FamilyProvider({children}:{children:ReactNode}){
  async function save(kind:string,payload:Record<string,any>,id?:string){
  if(!demo && !family){toast.error('Önce aile alanınızı oluşturun.');return;}if(!demo && self?.access!=='editor' && !['message','status'].includes(kind)){toast.error('Bu işlem için düzenleme izni gerekli.');return;}
  if(demo){const item={id:id??crypto.randomUUID(),kind,payload,author_id:parent,created_at:new Date().toISOString()};setDemoData(old=>id?old.map(r=>r.id===id?item:r):[...old,item]);if(kind==='event')setDemoHistory(old=>[{id:crypto.randomUUID(),actor_name:parent==='anne'?'Elif':'Emre',action:id?'düzenlendi':'eklendi',snapshot:payload,created_at:new Date().toISOString()},...old]);}
- else {const result=id?await supabase.from('family_records').update({payload:payload as Json}).eq('id',id):await supabase.from('family_records').insert({family_id:family.id,kind,payload:payload as Json,author_id:user?.id});if(result.error){toast.error(result.error.message);throw result.error;}refresh();}
+ else {if(!family||!user)return;const result=id?await supabase.from('family_records').update({payload:payload as Json}).eq('id',id):await supabase.from('family_records').insert({family_id:family.id,kind,payload:payload as Json,author_id:user.id});if(result.error){toast.error(result.error.message);throw result.error;}refresh();}
  }
  async function remove(id:string){if(demo)setDemoData(old=>old.filter(r=>r.id!==id));else{const {error}=await supabase.from('family_records').delete().eq('id',id);if(error){toast.error(error.message);return;}refresh();}}
  return <Context.Provider value={{user,family:demo?{child_name:'Deniz',id:'demo'}:family,members:demo?[{user_id:'anne',parent_role:'anne',display_name:'Elif',access:'editor'},{user_id:'baba',parent_role:'baba',display_name:'Emre',access:'editor'}]:query.data?.members??[],profile:query.data?.profile,records:demo?demoData:query.data?.records??[],history:demo?demoHistory:query.data?.history??[],loading:!ready||!!user&&query.isLoading,demo,parent:demo?parent:self?.parent_role??'anne',access:demo?'editor':self?.access??'viewer',setParent,save,remove,refresh}}>{children}</Context.Provider>;
