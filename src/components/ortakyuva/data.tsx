@@ -8,17 +8,17 @@ export type Payload=Partial<Record<'title'|'date'|'time'|'end'|'location'|'paren
 export type RecordItem={id:string;kind:string;payload:Payload;author_id:string;created_at:string};
 const today=new Date(); const date=(offset:number)=>{const d=new Date(today);d.setDate(d.getDate()+offset);return d.toLocaleDateString('sv-SE');};
 export const demoRecords:RecordItem[]=[
-{id:'e1',kind:'event',author_id:'baba',created_at:today.toISOString(),payload:{title:'Babayla hafta sonu',date:date(0),time:'17:00',end:'19:00',location:'Maçka Parkı, ana giriş',parent:'baba',repeat:'weekly',status:'confirmed',reminder:'30'}},
-{id:'e2',kind:'event',author_id:'anne',created_at:today.toISOString(),payload:{title:'Piyano dersi',date:date(2),time:'16:00',end:'17:00',location:'Müzik Atölyesi',parent:'anne',repeat:'weekly',status:'confirmed',reminder:'30'}},
-{id:'e3',kind:'event',author_id:'baba',created_at:today.toISOString(),payload:{title:'Birlikte sinema',date:date(3),time:'14:00',end:'16:00',location:'Cevahir AVM',parent:'baba',repeat:'none',status:'pending',reminder:'60'}},
-{id:'t1',kind:'task',author_id:'anne',created_at:today.toISOString(),payload:{title:'Matematik ödevi',note:'Sayfa 24–25 · 10 soru',time:'18:00',done:false}},
-{id:'t2',kind:'task',author_id:'anne',created_at:today.toISOString(),payload:{title:'D vitamini',note:'1 damla · Yemekten sonra',time:'19:30',done:false}},
-{id:'t3',kind:'task',author_id:'anne',created_at:today.toISOString(),payload:{title:'20 dakika kitap okuma',note:'Küçük Prens · Bölüm 4',time:'20:00',done:true}},
-{id:'h1',kind:'health',author_id:'anne',created_at:today.toISOString(),payload:{title:'Alerjiler',note:'Fındık ve fıstık alerjisi. Paketli gıdaların içeriğini kontrol edelim.'}},
-{id:'h2',kind:'health',author_id:'anne',created_at:today.toISOString(),payload:{title:'İlaç & vitamin',note:'D vitamini · Her gün 19:30 · 1 damla'}},
-{id:'n1',kind:'note',author_id:'anne',created_at:today.toISOString(),payload:{title:'Pazartesi okul gezisi',note:'Deniz’in çantasına su matarası ve şapkasını koymayı unutmayalım.',parent:'anne'}},
-{id:'m1',kind:'message',author_id:'baba',created_at:today.toISOString(),payload:{text:'Deniz’i bugün 17:00’de parkın ana girişinden alabilirim. Senin için de uygun mu?',parent:'baba'}},
-{id:'m2',kind:'message',author_id:'anne',created_at:today.toISOString(),payload:{text:'Evet, uygun. Mavi montunu da çantasına koydum 🙂',parent:'anne'}}];
+{id:'e1',kind:'event',author_id:'baba',created_at:date(0)+"T12:00:00.000Z",payload:{title:'Babayla hafta sonu',date:date(0),time:'17:00',end:'19:00',location:'Maçka Parkı, ana giriş',parent:'baba',repeat:'weekly',status:'confirmed',reminder:'30'}},
+{id:'e2',kind:'event',author_id:'anne',created_at:date(0)+"T12:00:00.000Z",payload:{title:'Piyano dersi',date:date(2),time:'16:00',end:'17:00',location:'Müzik Atölyesi',parent:'anne',repeat:'weekly',status:'confirmed',reminder:'30'}},
+{id:'e3',kind:'event',author_id:'baba',created_at:date(0)+"T12:00:00.000Z",payload:{title:'Birlikte sinema',date:date(3),time:'14:00',end:'16:00',location:'Cevahir AVM',parent:'baba',repeat:'none',status:'pending',reminder:'60'}},
+{id:'t1',kind:'task',author_id:'anne',created_at:date(0)+"T12:00:00.000Z",payload:{title:'Matematik ödevi',note:'Sayfa 24–25 · 10 soru',time:'18:00',done:false}},
+{id:'t2',kind:'task',author_id:'anne',created_at:date(0)+"T12:00:00.000Z",payload:{title:'D vitamini',note:'1 damla · Yemekten sonra',time:'19:30',done:false}},
+{id:'t3',kind:'task',author_id:'anne',created_at:date(0)+"T12:00:00.000Z",payload:{title:'20 dakika kitap okuma',note:'Küçük Prens · Bölüm 4',time:'20:00',done:true}},
+{id:'h1',kind:'health',author_id:'anne',created_at:date(0)+"T12:00:00.000Z",payload:{title:'Alerjiler',note:'Fındık ve fıstık alerjisi. Paketli gıdaların içeriğini kontrol edelim.'}},
+{id:'h2',kind:'health',author_id:'anne',created_at:date(0)+"T12:00:00.000Z",payload:{title:'İlaç & vitamin',note:'D vitamini · Her gün 19:30 · 1 damla'}},
+{id:'n1',kind:'note',author_id:'anne',created_at:date(0)+"T12:00:00.000Z",payload:{title:'Pazartesi okul gezisi',note:'Deniz’in çantasına su matarası ve şapkasını koymayı unutmayalım.',parent:'anne'}},
+{id:'m1',kind:'message',author_id:'baba',created_at:date(0)+"T12:00:00.000Z",payload:{text:'Deniz’i bugün 17:00’de parkın ana girişinden alabilirim. Senin için de uygun mu?',parent:'baba'}},
+{id:'m2',kind:'message',author_id:'anne',created_at:date(0)+"T12:00:00.000Z",payload:{text:'Evet, uygun. Mavi montunu da çantasına koydum 🙂',parent:'anne'}}];
 type State={user:User|null;family:any;members:any[];records:RecordItem[];history:any[];profile:any;loading:boolean;demo:boolean;parent:string;access:string;setParent:(p:string)=>void;save:(kind:string,payload:Record<string,any>,id?:string)=>Promise<void>;remove:(id:string)=>Promise<void>;refresh:()=>void};
 const Context=createContext<State|null>(null);
 export function FamilyProvider({children}:{children:ReactNode}){
